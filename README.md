@@ -29,7 +29,7 @@
 
   
   
-  ![엔티티 관계](C:\Users\epinm\Desktop\entity.png)
+  ![엔티티 관계](src\main\resources\image\entity.png)
 
 
 
@@ -258,17 +258,29 @@
   
      ​        (사용하려한 쿼리문)
   
-     ![쿼리문](C:\Users\epinm\Desktop\쿼리.png)
+     ~~~ 
+     select     q.year, q.instituteName
+     from       (
+                    select        m.year, b.instituteName
+                        ,             sum(m.money)
+                     from         Bank b
+                     inner join fetch BankMoney m
+                     on             b.instituteCode = m.instituteCode
+                     group by  m.year, b.instituteName
+                     order by   sum(m.money) desc
+                     ) q
+     where    rownum = 1 
+     ~~~
   
      
   
   3. ######  외환은행 최소 평균 금액(년도)과 최대 평균 금액(년도) 조회 API
   
      - 외환은행의 코드를 조건절에 추가한 후 평균 금액 순으로 데이터를 조회
-  - 조회된 데이터의 금액을 비교하여 최소 금액과 최대 금액을 담아 출력
+     - 조회된 데이터의 금액을 비교하여 최소 금액과 최대 금액을 담아 출력
      - 외환은행 뿐만 아니라 여러 은행 코드를 넣어 데이터 검증 완료
   
-     
+  
   
   4. ###### 2018년 특정 은행의 특정 달 지원 금액 예측 API
   
