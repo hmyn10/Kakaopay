@@ -19,29 +19,41 @@
   1. github 소스 다운로드
   2. 프로젝트 마우스 우클릭 > Gradle > Refresh Gradle Project
   3. 프로젝트 마우스 우클릭 > Run As > Spring Boot App 실행 
-  4. 데이터의 조회를 위해 http://localhost:7979/api/saveBank 제일 먼저 호출
-  5. 저장 완료 후 각 API 호출
+  4. Token 생성을 위해 http://localhost:7979/user/signUp 호출과 
+     http://localhost:7979/user/signIn 호출을 차례대로 실행해서 토큰 발급
+  5. 데이터의 조회 전 http://localhost:7979/api/saveBank 호출하여 데이터 저장
+  6. 저장 완료 후 각 API 호출
   ```
 
 
 
-+ #### 테이블 관계
++ #### 엔티티 관계 ( 1(Bank) : 多(BankMoney) )
 
+  >  Bank
+  
+  | Key  |    Column     |     Type      |
+  | :--: | :-----------: | :-----------: |
+  |  PK  | instituteCode |    NUMBER     |
+  |      | instituteName | VARCHAR2(100) |
+  
+  >  BankMoney
+  
+  | Key  |    Column     |  Type  |
+  | :--: | :-----------: | :----: |
+  |  PK  |     year      | NUMBER |
+  |  PK  |     month     | NUMBER |
+  |  FK  | instituteCode | NUMBER |
+  |      |     money     | NUMBER |
   
   
-  ![엔티티 관계](src\main\resources\image\entity.png)
-
-
-
-
 
 + #### API 호출 URL (http://localhost:7979) 
 
   1. ##### POST
   
-     - _/user/singUp_ : 계정 생성 시, Token 생성 API
+     - _/user/signUp_: 계정 생성 시, Token 생성 API
   
-       > 요청 파라미터 (/user/singUp?username=kakao&password=pay1234)
+       > 요청 파라미터 (/user/signUp?username=kakao&password=pay1234)
   
        ~~~ 
        {
@@ -60,9 +72,9 @@
        }
        ~~~
        
-     - _/user/singIn_ : 로그인 시, Token 발급 API
+     - _/user/signIn_ : 로그인 시, Token 발급 API
   
-       > 요청 파라미터 (/user/singIn?username=kakao&password=pay1234)
+       > 요청 파라미터 (/user/signIn?username=kakao&password=pay1234)
   
        ~~~
        {
@@ -91,7 +103,7 @@
   
   2. ##### GET
   
-     - _/user/refresh_ : refresh Token 재발급 API
+     - _/user/refreshToken_ : refresh Token 재발급 API
   
        > 응답
   
@@ -290,4 +302,12 @@
      
      - [java-timeseries](https://github.com/signaflo/java-timeseries) 오픈소스 라이브러리 사용
      
+       
+     
+  5. ###### JWT를 이용한 Token 기반 API 인증 기능
+  
+     - 우선 JWT 개념부터 시작해서 설정 및 기능 구현 코드를 보며 파악
+  
+     - 사용된 소스를 기반으로 구현한 후 프로젝트에 맞게 구현되도록 적용
+  
        
