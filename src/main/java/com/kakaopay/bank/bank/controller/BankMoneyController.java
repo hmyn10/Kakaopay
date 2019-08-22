@@ -28,8 +28,7 @@ import lombok.RequiredArgsConstructor;
 public class BankMoneyController {
 	
 	private static Logger log = LoggerFactory.getLogger(BankController.class);
-	//private final JwtManager jwtManager;
-	//private final UserService userService;
+
 	private static final HttpHeaders httpHeaders = new HttpHeaders();
 	
 	private final BankMoneyService bankMoneyService; 

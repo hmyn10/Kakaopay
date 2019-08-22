@@ -17,8 +17,7 @@ public class TokenInterceptor implements HandlerInterceptor {
     }
 
     @Override 
-    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
-            throws Exception {
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         try {
         	System.out.println("request :::: " + request);
         	System.out.println("request.getHeader(HEADER_AUTH) :::: " + request.getHeader(HEADER_AUTH));

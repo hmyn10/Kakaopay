@@ -25,8 +25,8 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class BankService {
 	
-	
-    private final EntityManager  entityManager;
+	//@PersistenceContext
+    private final EntityManager entityManager;
 	
 	private final BankJpaRepo bankJpaRepo;
 	

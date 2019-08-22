@@ -69,33 +69,5 @@ public class UserService {
 
        return getToken(user);
     }
-
     
-    /*public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
-        this.userRepository = userRepository;
-        this.passwordEncoder = passwordEncoder;
-    }
-
-    public UserDto register(UserDto user) {
-        verifyExist(user);
-        return userRepository.save(user.toEntity(passwordEncoder))
-                			 .toUserDto();
-    }
-
-    public void verifyExist(UserDto user) {
-        if (userRepository.findByUserId(user.getUserId()).isPresent()) {
-            throw new UnAuthenticationException(ErrorMessage.EXIST_ID);
-        }
-    }
-
-    public UserDto login(String userId, String password) {
-        User user = findByUserId(userId);
-        user.matchPassword(password, passwordEncoder);
-        return user.toUserDto();
-    }
-
-    public User findByUserId(String userId) {
-        return userRepository.findByUserId(userId)
-                .orElseThrow(() -> new EntityNotFoundException(ErrorMessage.NOT_EXIST_USER));
-    }*/
 }

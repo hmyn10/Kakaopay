@@ -19,23 +19,24 @@ public class JwtService implements TokenService {
     int refreshTokenExpirationTime;
 
 
-    @Override
+    @SuppressWarnings("deprecation")
+	@Override
     public <T> Map<String, Object> publishToken(Map<String, Object> body, T subject) {
         String accessToken = Jwts.builder()
-                .setHeaderParam("typ", "JWT")
-                .setSubject(subject.toString())
-                .setClaims(body)
-                .setExpiration(new Date(System.currentTimeMillis() + 1000 * accessTokenExpirationTime))
-                .signWith(SignatureAlgorithm.HS256, this.generateKey())
-                .compact();
+					                .setHeaderParam("typ", "JWT")
+					                .setSubject(subject.toString())
+					                .setClaims(body)
+					                .setExpiration(new Date(System.currentTimeMillis() + 1000 * accessTokenExpirationTime))
+					                .signWith(SignatureAlgorithm.HS256, this.generateKey())
+					                .compact();
 
         String refreshToken = Jwts.builder()
-                .setHeaderParam("typ", "JWT")
-                .setSubject(subject.toString())
-                .setClaims(body)
-                .setExpiration(new Date(System.currentTimeMillis() + 1000 * refreshTokenExpirationTime))
-                .signWith(SignatureAlgorithm.HS256, this.generateKey())
-                .compact();
+					                .setHeaderParam("typ", "JWT")
+					                .setSubject(subject.toString())
+					                .setClaims(body)
+					                .setExpiration(new Date(System.currentTimeMillis() + 1000 * refreshTokenExpirationTime))
+					                .signWith(SignatureAlgorithm.HS256, this.generateKey())
+					                .compact();
         Map<String, Object> resultMap = new HashMap<>();
         resultMap.put("token_type","bearer");
         resultMap.put("access_token", accessToken);
@@ -47,7 +48,7 @@ public class JwtService implements TokenService {
     public String getUsernameFromToken(String token) throws IllegalAccessException {
         try {
             Claims claims = Jwts.parser().setSigningKey(this.generateKey())
-                    .parseClaimsJws(token).getBody(); // 정상 수행된다면 해당 토큰은 정상토큰
+                    					 .parseClaimsJws(token).getBody(); // 정상 수행된다면 해당 토큰은 정상토큰
             return claims.get("username").toString();
         } catch (ExpiredJwtException e) {
             throw new IllegalAccessException(e.getMessage());
@@ -60,6 +61,7 @@ public class JwtService implements TokenService {
         byte[] key = null;
         try {
             key = secretKey.getBytes("UTF-8");
+            System.out.println("key :::: " + key);
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }

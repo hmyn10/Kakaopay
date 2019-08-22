@@ -3,8 +3,6 @@ package com.kakaopay.bank.account.controller;
 import java.util.Collections;
 
 import javax.persistence.EntityExistsException;
-import javax.servlet.http.HttpServletResponse;
-import javax.validation.Valid;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -75,8 +73,9 @@ public class UserController {
 	 * 
 	 * @info : 요청 시, refresh Token 재발급 API
 	 */
+	@SuppressWarnings("rawtypes")
 	@GetMapping(value = "/refreshToken") 
-	public ResponseEntity refreshToken(@Valid @RequestHeader(value = "Authorization", required=false) String token ) {
+	public ResponseEntity refreshToken(@RequestHeader("Authorization") String token ) {
 		System.out.println("token :::: " + token);
 		try {
             return new ResponseEntity<>(userService.updateAccessToken(token), httpHeaders, HttpStatus.OK);

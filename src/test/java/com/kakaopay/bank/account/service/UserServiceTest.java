@@ -54,8 +54,7 @@ public class UserServiceTest {
 
     @Test(expected = EntityExistsException.class)
     public void testSignUpThrowEntityExistsException() {
-        when(userRepository.existsByUsername(userDto.getUsername()))
-                .thenReturn(true);
+        when(userRepository.existsByUsername(userDto.getUsername())).thenReturn(true);
 
         accountService.signUp(userDto);
     }
@@ -64,10 +63,10 @@ public class UserServiceTest {
     public void testSignIn() {
         when(userRepository.findByUsername(userDto.getUsername()))
                 .thenReturn(Optional.of(User.builder()
-                        .id(1L)
-                        .username("test")
-                        .password(passwordEncoder.encode(userDto.getPassword()))
-                        .build()));
+							                        .id(1L)
+							                        .username("test")
+							                        .password(passwordEncoder.encode(userDto.getPassword()))
+							                        .build()));
         accountService.signIn(userDto);
         verify(userRepository, atLeastOnce()).findByUsername(userDto.getUsername());
     }
@@ -82,32 +81,31 @@ public class UserServiceTest {
     public void testSignInThrowBadCredentialsException(){
         when(userRepository.findByUsername(userDto.getUsername()))
                 .thenReturn(Optional.of(User.builder()
-                        .id(1L)
-                        .username("test")
-                        .password(passwordEncoder.encode(userDto.getPassword()+"fake"))
-                        .build()));
+			                        .id(1L)
+			                        .username("test")
+			                        .password(passwordEncoder.encode(userDto.getPassword()+"fake"))
+			                        .build()));
         accountService.signIn(userDto);
         verify(userRepository, atLeastOnce()).findByUsername(userDto.getUsername());
     }
 
     @Test
     public void testUpdateAccessToken() throws IllegalAccessException {
-        when(tokenService.getUsernameFromToken(testJwtToken))
-                .thenReturn("test");
+        when(tokenService.getUsernameFromToken(testJwtToken)).thenReturn("test");
         when(userRepository.findByUsername(userDto.getUsername()))
                 .thenReturn(Optional.of(User.builder()
-                        .id(1L)
-                        .username("test")
-                        .password(passwordEncoder.encode(userDto.getPassword()+"fake"))
-                        .build()));
+			                        .id(1L)
+			                        .username("test")
+			                        .password(passwordEncoder.encode(userDto.getPassword()+"fake"))
+			                        .build()));
         accountService.updateAccessToken(testJwtToken);
         verify(userRepository, atLeastOnce()).findByUsername(userDto.getUsername());
     }
 
     @Test(expected = UsernameNotFoundException.class)
     public void testUpdateAccessTokenThrowUsernameNotFoundException() throws IllegalAccessException {
-        when(tokenService.getUsernameFromToken(testJwtToken))
-                .thenReturn("test");
+        when(tokenService.getUsernameFromToken(testJwtToken)).thenReturn("test");
+        
         accountService.updateAccessToken(testJwtToken);
         verify(userRepository, atLeastOnce()).findByUsername(userDto.getUsername());
     }

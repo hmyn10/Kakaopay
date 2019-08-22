@@ -19,33 +19,34 @@ import java.util.List;
 @EnableSwagger2
 public class SwaggerConfig {
 	
-    @Bean
+    @SuppressWarnings({ "rawtypes", "unchecked" })
+	@Bean
 
     public Docket api() {
 
         List global = new ArrayList();
         global.add(new ParameterBuilder().name("Authorization")
-                .description("Access Token")
-                .parameterType("header")
-                .required(false)
-                .defaultValue("bearer")
-                .modelRef(new ModelRef("string"))
-                .build());
-
+						                .description("Access Token")
+						                .parameterType("header")
+						                .required(false)
+						                .defaultValue("bearer")
+						                .modelRef(new ModelRef("string"))
+						                .build());
+    	System.out.println("SwggerConfig global****" + global);
         return new Docket(DocumentationType.SWAGGER_2)
-                .globalOperationParameters(global)
-                .select()
-                .apis(RequestHandlerSelectors.basePackage("kakaopay"))
-                .paths(PathSelectors.any())
-                .build()
-                .apiInfo(apiInfo());
+						                .globalOperationParameters(global)
+						                .select()
+						                .apis(RequestHandlerSelectors.basePackage("kakaopay"))
+						                .paths(PathSelectors.any())
+						                .build()
+						                .apiInfo(apiInfo());
     }
 
     private ApiInfo apiInfo() {
 
         return new ApiInfoBuilder()
-                .title("Housing Finance API")
-                .description("kakaopay 서버개발 사전과제 주택금융 API 입니다")
-                .build();
+				                .title("Housing Finance API")
+				                .description("kakaopay 서버개발 사전과제 주택금융 API 입니다")
+				                .build();
     }
 }
